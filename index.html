@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="./libs/img/favicon.ico" />
+		<title>Company Directory</title>
+		<link href="./vendors/css/bootstrap.min.css" rel="stylesheet" />
+		
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+			rel="stylesheet"
+/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans&family=Nunito+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="./libs/css/styles.css" />
+	</head>
+	<body>
+
+		<button id="backToTopButton" type="button" class="btn btn-primary">Back To Top</button>
+
+		<!--NAVBAR-->
+		<!--
+		  <nav class="navbar sticky-top navbar-dark bg-dark">
+			<div class="container-fluid">
+			  <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+
+				<li class="nav-item dropdown">
+				  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Show all
+				  </a>
+				  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+					<li><a id="getPersonnel" class="dropdown-item" >Personnel</a></li>
+					<li><a class="dropdown-item" id="getDepartments">Departments</a></li>
+					<li><a class="dropdown-item" id="getLocations">Locations</a></li>
+				  </ul>
+				</li>
+			  	  
+			  <h1 class="text-light">COMPANY DIRECTORY</h1>
+			</div>
+		  </nav> -->
+		
+		  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+			  <a class="navbar-brand" href="#">Company Directory</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+				<ul class="navbar-nav">
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="showAllDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Show All
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+						<li><a class="dropdown-item" id="getPersonnel" >Personnel</a></li>
+						<li><a class="dropdown-item" id="getDepartments">Departments</a></li>
+						<li><a class="dropdown-item" id="getLocations">Locations</a></li>
+					</ul>
+				  </li>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="createDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Create
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+						<li>
+							<a class="dropdown-item"  id="createPersonnelModalButton" data-bs-toggle="modal" data-bs-target="#createPersonnelModal">
+								 Personnel
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" id="createDepartmentModalButton"  data-bs-toggle="modal" data-bs-target="#createDepartmentModal">
+								 Department
+							</a>
+						</li>
+						
+						<li>
+							<a class="dropdown-item" id="createLocationModalButton" data-bs-toggle="modal" data-bs-target="#createLocationModal">
+								Location
+							</a>
+						</li>
+					</ul>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" role="button" aria-current="page" data-bs-toggle="modal" data-bs-target="#advancedFindModal">Find</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+		  
+
+		  <!--SEARCH MODAL-->
+		  <!--
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="exampleModalLabel">Control Panel</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					
+
+					<div class="accordion" id="accordionExample">
+						
+						<div class="accordion-item">
+						  <h2 class="accordion-header" id="headingOne">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#getAllCollapse" aria-expanded="true" aria-controls="collapseOne">
+							  Get All
+							</button>
+						  </h2>
+						  <div id="getAllCollapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<div class="d-grid gap-2">
+									<button type="button" id="getPersonnel" class="btn btn-primary" data-bs-dismiss="modal">Get all personnel</button>
+									<button type="button" id="getDepartments" class="btn btn-primary" data-bs-dismiss="modal">Get all departments</button>
+									<button type="button" id="getLocations" class="btn btn-primary" data-bs-dismiss="modal">Get all locations</button>
+								</div>
+							</div>
+						  </div>
+						</div> 
+						<div class="accordion-item">
+						  <h2 class="accordion-header" id="headingTwo">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-expanded="false" aria-controls="collapseTwo">
+							  Search
+							</button>
+						  </h2>
+						  <div id="searchCollapse" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<form class="form-floating" id="advancedFind">
+
+									<select class="form-select" id="searchPDL" aria-label="Default select example">
+										<option value="default" selected disabled>Search For</option>
+										<option value="personnel">Personnel</option>
+										<option value="department">Department</option>
+										<option value="location">Location</option>
+									</select>
+		
+									<select class="form-select" id="searchBy" aria-label="Default select example">
+										<option value="default" selected disabled>Search By</option>
+									</select>
+		
+									<input type="text" class="form-control" id="searchInput">
+									<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+								</form>
+							</div>
+						  </div>
+						</div>
+						<div class="accordion-item">
+						  <h2 class="accordion-header" id="headingThree">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#createCollapse" aria-expanded="false" aria-controls="collapseThree">
+							  Create
+							</button>
+						  </h2>
+						  <div id="createCollapse" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<div class="d-grid gap-2">
+									
+									<button type="button" id="createDepartmentModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">
+										Create Department
+									</button>
+
+									
+									<button type="button" id="createPersonnelModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPersonnelModal">
+										Create Personnel
+									</button>
+
+									
+									<button type="button" id="createLocationModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLocationModal">
+										Create Location
+									</button>
+								</div>
+							</div>
+						  </div>
+						</div>
+					  </div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  
+				</div>
+			  </div>
+			</div>
+		</div> -->
+
+		<!-- Advanced Find Modal -->
+		<div class="modal fade" id="advancedFindModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New Department</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="advancedFind">
+
+						<select class="form-select" id="searchPDL" aria-label="Default select example">
+							<option value="default" selected disabled>Search For</option>
+							<option value="personnel">Personnel</option>
+							<option value="department">Department</option>
+							<option value="location">Location</option>
+						</select>
+
+						<select class="form-select" id="searchBy" aria-label="Default select example">
+							<option value="default" selected disabled>Search By</option>
+						</select>
+
+						<input type="text" class="form-control" id="searchInput">
+						
+					
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+			</div>
+		</div>
+
+		  <!-- Create department Modal -->
+		<div class="modal fade" id="createDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New Department</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="createDepartment">
+
+						<!--New department name textbox-->
+						<div>
+							<label for="createDepartmentName" class="form-label">Name</label>
+							<input type="text" class="form-control" id="createDepartmentName">
+						</div>
+						<!--New department location-->
+						<div>
+							<label for="createDepartmentName" class="form-label">Location</label>
+							<select class="form-select" id="createDepartmentOptions" aria-label="Default select example"></select>
+						</div>
+						
+					
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+			</div>
+		</div>
+		
+		  <!-- Create personnel Modal -->
+		  <div class="modal fade" id="createPersonnelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New Personnel</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="createPersonnel">
+
+						<!--New personnel first name name textbox-->
+						<div>
+							<label for="createPersonnelfirstName" class="form-label">First Name</label>
+							<input type="text" class="form-control" id="createPersonnelFirstName">
+						</div>
+						<!--New personnel last name name textbox-->
+						<div>
+							<label for="createPersonnelLastName" class="form-label">Last Name</label>
+							<input type="text" class="form-control" id="createPersonnelLastName">
+						</div>
+						<!--New personnel job title textbox-->
+						<div>
+							<label for="createPersonnelJobTitle" class="form-label">Job Title</label>
+							<input type="text" class="form-control" id="createPersonnelJobTitle">
+						</div>
+						<!--New personnel email name textbox-->
+						<div>
+							<label for="createPersonnelEmail" class="form-label">Email</label>
+							<input type="text" class="form-control" id="createPersonnelEmail">
+						</div>
+						<!--New personnel department-->
+						<div>
+							<label for="createPersonnelOptions" class="form-label">Department</label>
+							<select class="form-select" id="createPersonnelOptions" aria-label="Default select example"></select>
+						</div>
+				
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+			</form>
+			</div>
+			</div>
+		</div>
+
+		 <!-- Create Location Modal -->
+		 <div class="modal fade" id="createLocationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New Location</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="createLocation">
+
+						<!--New Location name textbox-->
+						<div>
+							<label for="createLocationName" class="form-label">Name</label>
+							<input type="text" class="form-control" id="createLocationName">
+						</div>
+						<br>
+						
+					
+				</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
+			</div>
+			</div>
+		</div>
+
+		<!-- Edit personnel Modal -->
+		<div class="modal fade" id="editPersonnelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Edit Personnel</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="editPersonnel">
+						<div>
+							
+							<input class="form-control" id="editPersonnelID" type="text" hidden>
+						</div>
+						<!--Edit personnel first name name textbox-->
+						<div>
+							<label for="editPersonnelfirstName" class="form-label">First Name</label>
+							<input type="text" class="form-control" id="editPersonnelFirstName">
+						</div>
+						<!--Edit personnel last name  textbox-->
+						<div>
+							<label for="editPersonnelLastName" class="form-label">Last Name</label>
+							<input type="text" class="form-control" id="editPersonnelLastName">
+						</div>
+						<!--Edit personnel job title textbox-->
+						<div>
+							<label for="editPersonnelJobTitle" class="form-label">Job Title</label>
+							<input type="text" class="form-control" id="editPersonnelJobTitle">
+						</div>
+						<!--Edit personnel email name textbox-->
+						<div>
+							<label for="editPersonnelEmail" class="form-label">Email</label>
+							<input type="text" class="form-control" id="editPersonnelEmail">
+						</div>
+						<!--Edit personnel department-->
+						<div>
+							<label for="editPersonnelOptions" class="form-label">Department</label>
+							<select class="form-select" id="editPersonnelOptions" aria-label="Default select example"></select>
+						</div>
+				</div>
+				<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" data-bs-toggle="modal">Save</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+			</div>
+		</div>
+
+		<!-- Edit Department Modal -->
+		<div class="modal fade" id="editDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Edit Department</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="editDepartment">
+						<div>
+							
+							<input class="form-control" id="editDepartmentID" type="text" hidden>
+						</div>
+						<!--Edit department first name name textbox-->
+						<div>
+							<label for="editDepartmentName" class="form-label">Name</label>
+							<input type="text" class="form-control" id="editDepartmentName">
+						</div>
+						
+						<!--Edit department location-->
+						<div>
+							<label for="editDepartmentOptions" class="form-label">Location</label>
+							<select class="form-select" id="editDepartmentOptions" aria-label="Default select example"></select>
+						</div>
+				</div>
+				<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" data-bs-toggle="modal">Save</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+			</div>
+		</div>
+
+		<!-- Edit Location Modal -->
+		<div class="modal fade" id="editLocationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Edit Location</h5>
+				
+				</div>
+				<div class="modal-body">
+					<form class="form-floating" id="editLocation">
+						<div>
+							
+							<input class="form-control" id="editLocationID" type="text" hidden>
+						</div>
+						<!--Edit Location name textbox-->
+						<div>
+							<label for="editLocationName" class="form-label">Name</label>
+							<input type="text" class="form-control" id="editLocationName">
+						</div>
+						
+				</div>
+				<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" data-bs-toggle="modal">Save</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
+				</form>
+			</div>
+			</div>
+		</div>
+
+		<!--Confirm delete personnel modal-->
+		<div class="modal fade" id="confirmDeletePersonnelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Delete record</h5>
+				
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete this record?
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger confirmPersonnelDeletionDelete" data-bs-toggle="modal">Delete</a>
+					<a class="btn btn-primary confirmDeletionCancel" data-bs-toggle="modal">Cancel</a>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--Confirm delete department modal-->
+		<div class="modal fade" id="confirmDeleteDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Delete record</h5>
+				
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete this record?
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger confirmDepartmentDeletionDelete" data-bs-toggle="modal">Delete</a>
+					<a class="btn btn-primary confirmDeletionCancel" data-bs-toggle="modal">Cancel</a>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--Confirm delete location modal-->
+		<div class="modal fade" id="confirmDeleteLocationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Delete record</h5>
+				
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete this record?
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger confirmLocationDeletionDelete" data-bs-toggle="modal">Delete</a>
+					<a class="btn btn-primary confirmDeletionCancel" data-bs-toggle="modal">Cancel</a>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--Deletion confirmation modal-->
+		<div class="modal fade" id="deletionSuccessfulModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Deletion</h5>
+				
+				</div>
+				<div class="modal-body">
+					Record deleted
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--Deletion denial modal-->
+		<div class="modal fade" id="deletionUnsuccessfulModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Deletion</h5>
+				
+				</div>
+				<div class="modal-body">
+					Cannot delete record as violates dependencies, please delete associated records first then try again.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+			</div>
+		</div>
+		
+		<!--Creation confirmation modal-->
+		<div class="modal fade" id="creationSuccessfulModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New record</h5>
+				
+				</div>
+				<div class="modal-body">
+					Record created successfully
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>				</div>
+			</div>
+			</div>
+		</div>
+		
+		<div class="d-flex justify-content-center">
+			<div class="spinner-border" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+
+
+		<div class="container-fluid resultsContainer">
+			<div class="row g-3 d-flex justify-content-between" id="results">
+			
+			</div>
+		</div>
+		
+
+		
+		
+
+		<!--SCRIPTS-->
+		<script src="./vendors/js/jquery-3.6.0.min.js"></script>
+		<script src="./vendors/js/bootstrap.bundle.min.js"></script>
+		<script src="./vendors/js/kit.fontawesome.js"></script>
+		<script src="./libs/js/main.js" type="module"></script>
+	</body>
+</html>
