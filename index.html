@@ -467,18 +467,37 @@
 		</div>
 
 		<!--Confirm delete department modal-->
-		<div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="confirmDeleteDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">Delete record</h5>
 				
 				</div>
-				<div class="modal-body confirmDeletion">
+				<div class="modal-body confirmDepartmentDeletionText">
 					
 				</div>
 				<div class="modal-footer">
 					<a class="btn btn-danger confirmDepartmentDeletionDelete" data-bs-dismiss="modal">Delete</a>
+					<a class="btn btn-primary confirmDeletionCancel" data-bs-dismiss="modal">Cancel</a>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--Confirm delete location modal-->
+		<div class="modal fade" id="confirmDeleteLocationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Delete record</h5>
+				
+				</div>
+				<div class="modal-body confirmLocationDeletionText">
+					
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger confirmLocationDeletionDelete" data-bs-dismiss="modal">Delete</a>
 					<a class="btn btn-primary confirmDeletionCancel" data-bs-dismiss="modal">Cancel</a>
 				</div>
 			</div>
@@ -494,8 +513,8 @@
 				<h5 class="modal-title" id="exampleModalLabel">Deletion</h5>
 				
 				</div>
-				<div class="modal-body">
-					Record deleted
+				<div class="modal-body deletionSuccessfulText">
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>				</div>

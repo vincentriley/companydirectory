@@ -9,7 +9,8 @@ import {
 	updateEditDepartmentFields,
 	updateEditLocationFields,
 	deletionProhibited,
-	deletionConfirmation
+	locationDeletionConfirmation,
+	departmentDeletionConfirmation
 } from "./ui.js";
 
 /////////////////////////// READ ////////////////////////////////////////
@@ -230,7 +231,7 @@ const checkDepartmentDeletion = (id) => {
 				deletionProhibited(currentDepartmentName, "department")
 				
 			} else {
-				deletionConfirmation(currentDepartmentName, "department")
+				departmentDeletionConfirmation(currentDepartmentName)
 				
 			}
 			
@@ -260,8 +261,7 @@ const checkLocationDeletion = (id) => {
 				deletionProhibited(currentLocationName, "location")
 				
 			} else {
-				deletionConfirmation(currentLocationName, "location")
-				
+				locationDeletionConfirmation(currentLocationName)
 			}
 			
 		},

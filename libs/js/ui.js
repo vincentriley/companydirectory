@@ -16,8 +16,8 @@ export const displayPersonnel = (data) => {
                 <p class="card-text"><i class="fas fa-briefcase"></i> ${employee.jobTitle}</p>
                 <p class="card-text"><i class="fas fa-globe-americas"></i> ${employee.location}</p>
                 <p class="card-text"><i class="fas fa-envelope"></i> ${employee.email}</p>
-                <a value="${employee.id}" class="btn btn-secondary deletePersonnel customButton" data-bs-toggle="modal" data-bs-target="#confirmDeletePersonnelModal"><i class="fas fa-trash-alt"></i></a>
-                <a value="${employee.id}" class=" btn btn-secondary editPersonnelButton customButton" data-bs-toggle="modal" data-bs-target="#editPersonnelModal"><i class="fas fa-edit"></i></a>
+                <a value="${employee.id}" class="btn btn-secondary deletePersonnel customButton" data-bs-dismiss="modal" data-bs-target="#confirmDeletePersonnelModal"><i class="fas fa-trash-alt"></i></a>
+                <a value="${employee.id}" class=" btn btn-secondary editPersonnelButton customButton" data-bs-dismiss="modal" data-bs-target="#editPersonnelModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             
@@ -43,7 +43,7 @@ export const displayDepartments = (data) => {
                 <p class="card-text">Personnel: ${department.personnel}</p>
                 <a value="${department.id}" class="btn btn-secondary deleteDepartment customButton" data-bs-dismiss="modal" ><i class="fas fa-trash-alt"></i></a>
                 <a value="${department.id}" class="btn btn-secondary viewDepartmentPersonnel customButton"><i class="fas fa-users"></i></a>
-                <a value="${department.id}" class="btn btn-secondary editDepartmentButton customButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"><i class="fas fa-edit"></i></a>
+                <a value="${department.id}" class="btn btn-secondary editDepartmentButton customButton" data-bs-dismiss="modal" data-bs-target="#editDepartmentModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             `);
@@ -66,7 +66,7 @@ export const displayLocations = (data) => {
                 <h5 class="card-title">${location.name}</h5>
                 <a value="${location.id}" class="btn btn-secondary deleteLocation customButton" data-bs-dismiss="modal" ><i class="fas fa-trash-alt"></i></a>
                 <a value="${location.id}" class="btn btn-secondary viewLocationDepartments customButton"><i class="fas fa-sitemap"></i></a>
-                <a value="${location.id}" class="btn btn-secondary editLocationButton customButton" data-bs-toggle="modal" data-bs-target="#editLocationModal"><i class="fas fa-edit"></i></a>
+                <a value="${location.id}" class="btn btn-secondary editLocationButton customButton" data-bs-dismiss="modal" data-bs-target="#editLocationModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             `);
@@ -165,13 +165,18 @@ export const deletionProhibited = (name, type) => {
     
 }
 
-export const deletionConfirmation = (name, type) => {
-    $(".confirmDeletion").empty()
-    if (type === "location") {
-        $(".confirmDeletion").append(`Are you sure you want to delete ${name}?`)
-    }
-    if (type === "department") {
-        $(".confirmDeletion").append(`Are you sure you want to delete ${name}?`)
-    }
-    $("#confirmDeletionModal").modal("show")
+export const departmentDeletionConfirmation = (name) => {
+    $(".confirmDepartmentDeletionText").empty()
+    $(".confirmDepartmentDeletionText").append(`Are you sure you want to delete ${name}?`)
+    $("#confirmDeleteDepartmentModal").modal("show")
+    $(".deletionSuccessfulText").empty()
+    $(".deletionSuccessfulText").append(`Record deleted: ${name}`)
+}
+
+export const locationDeletionConfirmation = (name) => {
+    $(".confirmLocationDeletionText").empty()
+    $(".confirmLocationDeletionText").append(`Are you sure you want to delete ${name}?`)
+    $("#confirmDeleteLocationModal").modal("show")
+    $(".deletionSuccessfulText").empty()
+    $(".deletionSuccessfulText").append(`Record deleted: ${name}`)
 }
