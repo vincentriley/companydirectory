@@ -1,0 +1,11 @@
+#backToTopButton {
+    display: none;
+    bottom: 20px;
+    position: fixed;
+    left: 50%;
+    z-index: 1031;
+}
+
+.customButton {
+    width: 78px;
+}

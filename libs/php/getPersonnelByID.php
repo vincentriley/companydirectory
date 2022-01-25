@@ -70,7 +70,7 @@
 
 	// second query - does not accept parameters and so is not prepared
 
-	/*$query = 'SELECT id, name from department ORDER BY name';
+	$query = 'SELECT id, name from department ORDER BY name';
 
 	$result = $conn->query($query);
 	
@@ -89,11 +89,11 @@
 
 	}
    
-   	$department = [];*/
+   	$departmentList = [];
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
-		array_push($department, $row);
+		array_push($departmentList, $row);
 
 	}
 
@@ -102,7 +102,7 @@
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data']['personnel'] = $personnel;
-	//$output['data']['department'] = $department;
+	$output['data']['departmentList'] = $departmentList;
 	
 	mysqli_close($conn);
 

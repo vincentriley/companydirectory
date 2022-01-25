@@ -15,8 +15,8 @@ export const displayPersonnel = (data) => {
                 <p class="card-text"><i class="fas fa-briefcase"></i> ${employee.jobTitle}</p>
                 <p class="card-text"><i class="fas fa-globe-americas"></i> ${employee.location}</p>
                 <p class="card-text"><i class="fas fa-envelope"></i> ${employee.email}</p>
-                <a value="${employee.id}" class="btn btn-danger deletePersonnel" data-bs-toggle="modal" data-bs-target="#confirmDeletePersonnelModal">Delete</a>
-                <a value="${employee.id}" class="editPersonnelButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPersonnelModal">Edit</a>
+                <a value="${employee.id}" class="btn btn-secondary deletePersonnel customButton" data-bs-toggle="modal" data-bs-target="#confirmDeletePersonnelModal"><i class="fas fa-trash-alt"></i></a>
+                <a value="${employee.id}" class=" btn btn-secondary editPersonnelButton customButton" data-bs-toggle="modal" data-bs-target="#editPersonnelModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             
@@ -39,8 +39,9 @@ export const displayDepartments = (data) => {
                 <h5 class="card-title">${department.name}</h5>
                 <p class="card-text">Location ID: ${department.locationID}</p>
                 <p class="card-text">Personnel: ${department.personnel}</p>
-                <a value="${department.id}" class="btn btn-danger deleteDepartment" data-bs-toggle="modal" data-bs-target="#confirmDeleteDepartmentModal">Delete</a>
-                <a value="${department.id}" class="viewDepartmentPersonnel btn btn-warning">View personnel</a>
+                <a value="${department.id}" class="btn btn-secondary deleteDepartment customButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteDepartmentModal"><i class="fas fa-trash-alt"></i></a>
+                <a value="${department.id}" class="btn btn-secondary viewDepartmentPersonnel customButton"><i class="fas fa-users"></i></a>
+                <a value="${department.id}" class="btn btn-secondary editDepartmentButton customButton" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             `)
@@ -60,8 +61,9 @@ export const displayLocations = (data) => {
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">${location.name}</h5>
-                <a value="${location.id}" class="btn btn-danger deleteLocation" data-bs-toggle="modal" data-bs-target="#confirmDeleteLocationModal">Delete</a>
-                <a value="${location.id}" class="viewLocationDepartments btn btn-warning">View Departments</a>
+                <a value="${location.id}" class="btn btn-secondary deleteLocation customButton" data-bs-toggle="modal" data-bs-target="#confirmDeleteLocationModal"><i class="fas fa-trash-alt"></i></a>
+                <a value="${location.id}" class="btn btn-secondary viewLocationDepartments customButton"><i class="fas fa-sitemap"></i></a>
+                <a value="${location.id}" class="btn btn-secondary editLocationButton customButton" data-bs-toggle="modal" data-bs-target="#editLocationModal"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             `)
@@ -94,16 +96,22 @@ export const populateSearchCriteria = (value) => {
 }
 
 export const createDepartmentDropdown = (data) => {
+    $("#createDepartmentName").val("")
     $("#createDepartmentOptions").empty()
+    $("#editDepartmentOptions").empty()
     data.forEach((location) => {
         $("#createDepartmentOptions").append(`
+    <option value=${location.id}>${location.name}</option>
+    `)
+    })
+    data.forEach((location) => {
+        $("#editDepartmentOptions").append(`
     <option value=${location.id}>${location.name}</option>
     `)
     })
 }
 
 export const createPersonnelDropdown = (data) => {
-   
     $("#createPersonnelOptions").empty()
     $("#editPersonnelOptions").empty()
     data.forEach((department) => {
@@ -120,14 +128,23 @@ export const createPersonnelDropdown = (data) => {
 
 
 export const updateEditPersonnelFields = (id, data) => {
-    console.log(data)
     $("#editPersonnelID").val(id)
     $("#editPersonnelFirstName").val(data[0].firstName)
     $("#editPersonnelLastName").val(data[0].lastName)
     $("#editPersonnelJobTitle").val(data[0].jobTitle)
     $("#editPersonnelEmail").val(data[0].email)
-    $("#editPersonnelOptions").append(`
-    <option value=${data[0].departmentID}>${data[0].department}</option>
-    `)
     $("#editPersonnelOptions").val(data[0].departmentID)
+}
+
+export const updateEditDepartmentFields = (id, data) => {
+    console.log(data)
+    $("#editDepartmentID").val(id)
+    $("#editDepartmentName").val(data[0].name)
+    $("#editDepartmentOptions").val(data[0].id)
+}
+
+export const updateEditLocationFields = (id, data) => {
+    console.log(data)
+    $("#editLocationID").val(id)
+    $("#editLocationName").val(data[0].name)
 }

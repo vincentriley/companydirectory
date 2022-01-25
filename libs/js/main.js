@@ -35,6 +35,7 @@ const getDepartments = () => {
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
+			console.log(result)
 			displayDepartments(result.data);
 			createDepartmentDropdown(result.locationList);
 		},
@@ -45,19 +46,19 @@ const getDepartments = () => {
 };
 
 //gets locations for the purpose of populating the dropdown menu in create personnel
-/*const getDepartmentsPopulateDropdown = () => {
+const getDepartmentsPopulateDropdown = () => {
 	$.ajax({
 		url: "libs/php/getAllDepartments.php",
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
-			createPersonnelDropdown(result.data);
+			createDepartmentDropdown(result.locationList)
 		},
 		error: function (jqXHR, exception) {
 			console.log(jqXHR);
 		},
 	});
-};*/
+};
 
 //GET ALL LOCATIONS
 const getLocations = () => {
@@ -75,19 +76,20 @@ const getLocations = () => {
 };
 
 //gets locations for the purpose of populating the dropdown menu in create department
-/*const getLocationsPopulateDropdown = () => {
+const getLocationsPopulateDropdown = () => {
 	$.ajax({
-		url: "libs/php/getAllLocations.php",
+		url: "libs/php/getAllDepartments.php",
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
-			createDepartmentDropdown(result.data);
+			console.log(result)
+			createDepartmentDropdown(result.locationList);
 		},
 		error: function (jqXHR, exception) {
 			console.log(jqXHR);
 		},
 	});
-};*/
+};
 
 //GET PERSONNEL BY ID
 const getPersonnelByID = (id) => {
@@ -99,7 +101,9 @@ const getPersonnelByID = (id) => {
 			id: id,
 		},
 		success: function (result) {
+			console.log(result)
 			displayPersonnel(result.data.personnel);
+			createPersonnelDropdown(result.data.departmentList)
 			updateEditPersonnelFields(id, result.data.personnel);
 		},
 		error: function (jqXHR, exception) {
@@ -129,6 +133,7 @@ const getPersonnelAdvancedFind = (searchFor, searchBy, term) => {
 				createPersonnelDropdown(result.data.departmentList);
 			}
 			if (searchFor === "location") {
+				console.log(result)
 				displayLocations(result.data.location);
 				updateEditLocationFields(term, result.data.location);
 			}
@@ -178,6 +183,7 @@ const insertLocation = (name) => {
 			name: name,
 		},
 		success: function (result) {
+			
 			$("#creationSuccessfulModal").modal("show");
 			getPersonnelAdvancedFind("location", "name", name);
 		},
