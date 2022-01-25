@@ -8,6 +8,8 @@ import {
 	updateEditPersonnelFields,
 	updateEditDepartmentFields,
 	updateEditLocationFields,
+	deletionProhibited,
+	deletionConfirmation
 } from "./ui.js";
 
 /////////////////////////// READ ////////////////////////////////////////
@@ -35,7 +37,6 @@ const getDepartments = () => {
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
-			console.log(result)
 			displayDepartments(result.data);
 			createDepartmentDropdown(result.locationList);
 		},
@@ -82,7 +83,6 @@ const getLocationsPopulateDropdown = () => {
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
-			console.log(result)
 			createDepartmentDropdown(result.locationList);
 		},
 		error: function (jqXHR, exception) {
@@ -101,7 +101,6 @@ const getPersonnelByID = (id) => {
 			id: id,
 		},
 		success: function (result) {
-			console.log(result)
 			displayPersonnel(result.data.personnel);
 			createPersonnelDropdown(result.data.departmentList)
 			updateEditPersonnelFields(id, result.data.personnel);
@@ -133,7 +132,6 @@ const getPersonnelAdvancedFind = (searchFor, searchBy, term) => {
 				createPersonnelDropdown(result.data.departmentList);
 			}
 			if (searchFor === "location") {
-				console.log(result)
 				displayLocations(result.data.location);
 				updateEditLocationFields(term, result.data.location);
 			}
@@ -183,7 +181,6 @@ const insertLocation = (name) => {
 			name: name,
 		},
 		success: function (result) {
-			
 			$("#creationSuccessfulModal").modal("show");
 			getPersonnelAdvancedFind("location", "name", name);
 		},
@@ -216,17 +213,25 @@ const insertDepartment = (name, locationID) => {
 
 const checkDepartmentDeletion = (id) => {
 	$.ajax({
-		url: "libs/php/checkDeletion.php",
+		url: "libs/php/checkDepartmentDeletion.php",
 		type: "POST",
 		dataType: "json",
 		data: {
 			id: id
 		},
 		success: function (result) {
+			let currentDepartmentName;
+			for (let i = 0; i < result.departmentList.length; i++) {
+				if (id == result.departmentList[i].id) {
+					currentDepartmentName = result.departmentList[i].name
+				}
+			}
 			if (result.data != 0) {
-				$("#deletionUnsuccessfulModal").modal("show")
+				deletionProhibited(currentDepartmentName, "department")
+				
 			} else {
-				$("#confirmDeleteDepartmentModal").modal("show")
+				deletionConfirmation(currentDepartmentName, "department")
+				
 			}
 			
 		},
@@ -236,7 +241,37 @@ const checkDepartmentDeletion = (id) => {
 	});
 }
 
-/*const deleteDepartment = (id) => {
+const checkLocationDeletion = (id) => {
+	$.ajax({
+		url: "libs/php/checkLocationDeletion.php",
+		type: "POST",
+		dataType: "json",
+		data: {
+			id: id
+		},
+		success: function (result) {
+			let currentLocationName;
+			for (let i = 0; i < result.locationList.length; i++) {
+				if (id == result.locationList[i].id) {
+					currentLocationName = result.locationList[i].name
+				}
+			}
+			if (result.data != 0) {
+				deletionProhibited(currentLocationName, "location")
+				
+			} else {
+				deletionConfirmation(currentLocationName, "location")
+				
+			}
+			
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		},
+	});
+}
+
+const deleteDepartment = (id) => {
 	$.ajax({
 		url: "libs/php/deleteDepartment.php",
 		type: "POST",
@@ -256,7 +291,7 @@ const checkDepartmentDeletion = (id) => {
 			console.log(jqXHR);
 		},
 	});
-};*/
+};
 
 const deleteLocation = (id) => {
 	$.ajax({
@@ -449,6 +484,7 @@ $(document).on("click", ".deletePersonnel", (e) => {
 
 //delete location event
 $(document).on("click", ".deleteLocation", (e) => {
+	checkLocationDeletion(parseInt(e.currentTarget.getAttribute("value")))
 	$(".confirmLocationDeletionDelete").attr(
 		"value",
 		e.currentTarget.getAttribute("value")
@@ -495,6 +531,10 @@ $("#createDepartment").submit((e) => {
 });
 
 ///////////////////////////CREATE LOCATION EVENT////////////////////////////////////////
+
+$("#createLocationModalButton").click(() => {
+	$("#createLocationName").val("")
+})
 
 //ajax call event listener when create Location form is submitted
 $("#createLocation").submit((e) => {
