@@ -13,6 +13,74 @@ import {
 	departmentDeletionConfirmation
 } from "./ui.js";
 
+
+/////////////////////////// CREATE ////////////////////////////////////////
+
+const insertPersonnel = (
+	firstName,
+	lastName,
+	jobTitle,
+	email,
+	departmentID
+) => {
+	$.ajax({
+		url: "libs/php/insertPersonnel.php",
+		type: "POST",
+		dataType: "json",
+		data: {
+			firstName: firstName,
+			lastName: lastName,
+			jobTitle: jobTitle,
+			email: email,
+			departmentID: departmentID,
+		},
+		success: function (result) {
+			$("#creationSuccessfulModal").modal("show");
+			getPersonnelAdvancedFind("personnel", "firstName", firstName);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		},
+	});
+};
+
+const insertLocation = (name) => {
+	$.ajax({
+		url: "libs/php/insertLocation.php",
+		type: "POST",
+		dataType: "json",
+		data: {
+			name: name,
+		},
+		success: function (result) {
+			$("#creationSuccessfulModal").modal("show");
+			getPersonnelAdvancedFind("location", "name", name);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		},
+	});
+};
+
+const insertDepartment = (name, locationID) => {
+	$.ajax({
+		url: "libs/php/insertDepartment.php",
+		type: "POST",
+		dataType: "json",
+		data: {
+			locationID: locationID,
+			name: name,
+		},
+		success: function (result) {
+			$("#creationSuccessfulModal").modal("show");
+			getPersonnelAdvancedFind("department", "name", name);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		},
+	});
+};
+
 /////////////////////////// READ ////////////////////////////////////////
 
 //GET ALL PERSONNEL
@@ -143,17 +211,18 @@ const getPersonnelAdvancedFind = (searchFor, searchBy, term) => {
 	});
 };
 
-/////////////////////////// CREATE ////////////////////////////////////////
+///////////////////////////// UPDATE ////////////////////////////////////////////
 
-const insertPersonnel = (
+const updatePersonnel = (
 	firstName,
 	lastName,
 	jobTitle,
 	email,
-	departmentID
+	departmentID,
+	id
 ) => {
 	$.ajax({
-		url: "libs/php/insertPersonnel.php",
+		url: "libs/php/updatePersonnel.php",
 		type: "POST",
 		dataType: "json",
 		data: {
@@ -162,10 +231,10 @@ const insertPersonnel = (
 			jobTitle: jobTitle,
 			email: email,
 			departmentID: departmentID,
+			id: id,
 		},
 		success: function (result) {
-			$("#creationSuccessfulModal").modal("show");
-			getPersonnelAdvancedFind("personnel", "firstName", firstName);
+			getPersonnelAdvancedFind("personnel", "id", id);
 		},
 		error: function (jqXHR, exception) {
 			console.log(jqXHR);
@@ -173,36 +242,36 @@ const insertPersonnel = (
 	});
 };
 
-const insertLocation = (name) => {
+const updateDepartment = (name, locationID, id) => {
 	$.ajax({
-		url: "libs/php/insertLocation.php",
+		url: "libs/php/updateDepartment.php",
 		type: "POST",
 		dataType: "json",
 		data: {
 			name: name,
-		},
-		success: function (result) {
-			$("#creationSuccessfulModal").modal("show");
-			getPersonnelAdvancedFind("location", "name", name);
-		},
-		error: function (jqXHR, exception) {
-			console.log(jqXHR);
-		},
-	});
-};
-
-const insertDepartment = (name, locationID) => {
-	$.ajax({
-		url: "libs/php/insertDepartment.php",
-		type: "POST",
-		dataType: "json",
-		data: {
 			locationID: locationID,
-			name: name,
+			id: id,
 		},
 		success: function (result) {
-			$("#creationSuccessfulModal").modal("show");
-			getPersonnelAdvancedFind("department", "name", name);
+			getPersonnelAdvancedFind("department", "id", id);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		},
+	});
+};
+
+const updateLocation = (name, id) => {
+	$.ajax({
+		url: "libs/php/updateLocation.php",
+		type: "POST",
+		dataType: "json",
+		data: {
+			name: name,
+			id: id,
+		},
+		success: function (result) {
+			getPersonnelAdvancedFind("location", "id", id);
 		},
 		error: function (jqXHR, exception) {
 			console.log(jqXHR);
@@ -333,74 +402,6 @@ const deletePersonnel = (id) => {
 	});
 };
 
-///////////////////////////// UPDATE ////////////////////////////////////////////
-
-const updatePersonnel = (
-	firstName,
-	lastName,
-	jobTitle,
-	email,
-	departmentID,
-	id
-) => {
-	$.ajax({
-		url: "libs/php/updatePersonnel.php",
-		type: "POST",
-		dataType: "json",
-		data: {
-			firstName: firstName,
-			lastName: lastName,
-			jobTitle: jobTitle,
-			email: email,
-			departmentID: departmentID,
-			id: id,
-		},
-		success: function (result) {
-			getPersonnelAdvancedFind("personnel", "id", id);
-		},
-		error: function (jqXHR, exception) {
-			console.log(jqXHR);
-		},
-	});
-};
-
-const updateDepartment = (name, locationID, id) => {
-	$.ajax({
-		url: "libs/php/updateDepartment.php",
-		type: "POST",
-		dataType: "json",
-		data: {
-			name: name,
-			locationID: locationID,
-			id: id,
-		},
-		success: function (result) {
-			getPersonnelAdvancedFind("department", "id", id);
-		},
-		error: function (jqXHR, exception) {
-			console.log(jqXHR);
-		},
-	});
-};
-
-const updateLocation = (name, id) => {
-	$.ajax({
-		url: "libs/php/updateLocation.php",
-		type: "POST",
-		dataType: "json",
-		data: {
-			name: name,
-			id: id,
-		},
-		success: function (result) {
-			getPersonnelAdvancedFind("location", "id", id);
-		},
-		error: function (jqXHR, exception) {
-			console.log(jqXHR);
-		},
-	});
-};
-
 /////////////////////////// UPDATE EVENTS ////////////////////////////////////////
 
 /*$(document).on('click', ".editPersonnelButton",(e) => {
@@ -410,7 +411,7 @@ const updateLocation = (name, id) => {
 //fills in the fields in edit personnel modal
 $(document).on("click", ".editPersonnelButton", (e) => {
 	getPersonnelByID(parseInt(e.currentTarget.getAttribute("value")));
-	//getPersonnel(parseInt(e.target.id))
+	$("#editPersonnelModal").modal("show")
 });
 
 $(document).on("click", ".editDepartmentButton", (e) => {
@@ -419,6 +420,7 @@ $(document).on("click", ".editDepartmentButton", (e) => {
 		"id",
 		parseInt(e.currentTarget.getAttribute("value"))
 	);
+	$("#editDepartmentModal").modal("show")
 });
 
 $(document).on("click", ".editLocationButton", (e) => {
@@ -427,6 +429,7 @@ $(document).on("click", ".editLocationButton", (e) => {
 		"id",
 		parseInt(e.currentTarget.getAttribute("value"))
 	);
+	$("#editLocationModal").modal("show")
 });
 
 $("#editPersonnel").submit((e) => {
@@ -473,6 +476,13 @@ $(document).on("click", ".deleteDepartment", (e) => {
 
 //delete personnel event
 $(document).on("click", ".deletePersonnel", (e) => {
+	$(".confirmPersonnelDeletionText").empty()
+	$(".confirmPersonnelDeletionText").append(`
+		Are you sure you want to delete the record ${e.currentTarget.id}
+		`)
+	$("#confirmDeletePersonnelModal").modal("show")
+	$(".deletionSuccessfulText").empty();
+	$(".deletionSuccessfulText").append(`Record deleted: ${e.currentTarget.id}`);
 	$(".confirmPersonnelDeletionDelete").attr(
 		"value",
 		e.currentTarget.getAttribute("value")
@@ -632,3 +642,5 @@ $(document).ready(() => {
 	$(".spinner-border").hide();
 	getPersonnel();
 });
+
+

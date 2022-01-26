@@ -56,7 +56,7 @@
 	} 
 
 	if ($_REQUEST['searchFor'] == "location") {
-		$query = $conn->prepare('SELECT * from location WHERE ' . $_REQUEST['searchBy'] . ' = ?');
+		$query = $conn->prepare('SELECT location.id AS id, location.name AS name, COUNT(department.id) as department FROM location LEFT JOIN department ON department.locationID = location.id WHERE location.' . $_REQUEST['searchBy'] . ' = ?');
 
 		$query->bind_param("s", $_REQUEST['term']);
 
