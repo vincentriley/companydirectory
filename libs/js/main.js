@@ -84,20 +84,28 @@ const insertDepartment = (name, locationID) => {
 /////////////////////////// READ ////////////////////////////////////////
 
 //GET ALL PERSONNEL
-const getPersonnel = () => {
+const getPersonnel = (forDropdown) => {
 	$.ajax({
 		url: "libs/php/getAll.php",
 		type: "GET",
 		dataType: "json",
 		success: function (result) {
-			displayPersonnel(result.data);
-			createPersonnelDropdown(result.departmentList);
+			
+			if (forDropdown) {
+				createPersonnelDropdown(result.departmentList);
+			} else {
+				displayPersonnel(result.data);
+				createPersonnelDropdown(result.departmentList);
+			}
+			
 		},
 		error: function (jqXHR, exception) {
 			console.log(jqXHR);
 		},
 	});
 };
+
+
 
 //GET ALL DEPARTMENTS
 const getDepartments = () => {
@@ -402,6 +410,106 @@ const deletePersonnel = (id) => {
 	});
 };
 
+
+/////////////////////////// CREATE EVENTs ////////////////////////////////////////
+
+//Clears input fields
+$("#createPersonnelModalButton").on("click", () => {
+	$("#createPersonnelFirstName").val("")
+	$("#createPersonnelLastName").val("")
+	$("#createPersonnelJobTitle").val("")
+	$("#createPersonnelEmail").val("")
+	getPersonnel(true)
+})
+
+//ajax call event listener when create department form is submitted
+$("#createPersonnel").submit((e) => {
+	var firstName = $("#createPersonnelFirstName").val();
+	var lastName = $("#createPersonnelLastName").val();
+	var jobTitle = $("#createPersonnelJobTitle").val();
+	var email = $("#createPersonnelEmail").val();
+	var departmentID = parseInt($("#createPersonnelOptions").val());
+	insertPersonnel(firstName, lastName, jobTitle, email, departmentID);
+	e.preventDefault();
+});
+
+
+
+//Populates locations dropdown when create department modal button is clicked
+$(document).on("click", "#createDepartmentModalButton", (e) => {
+	getLocationsPopulateDropdown();
+});
+
+//ajax call event listener when create department form is submitted
+$("#createDepartment").submit((e) => {
+	insertDepartment(
+		$("#createDepartmentName").val(),
+		parseInt($("#createDepartmentOptions").val())
+	);
+	e.preventDefault();
+});
+
+//Create Location Event
+
+$("#createLocationModalButton").click(() => {
+	$("#createLocationName").val("")
+})
+
+//ajax call event listener when create Location form is submitted
+$("#createLocation").submit((e) => {
+	insertLocation($("#createLocationName").val());
+	e.preventDefault();
+});
+
+
+///////////////////////// READ EVENTS /////////////////////////////////////
+
+//Get personnel by id event listener
+$("#getPersonnelByID").submit((e) => {
+	getPersonnelByID($("#personnelIDValue").val());
+	e.preventDefault();
+});
+
+//Get All Departments event listeners
+$("#getPersonnel").click(getPersonnel);
+$("#getDepartments").click(getDepartments);
+$("#getLocations").click(getLocations);
+
+//Get personnel in each department when department "View Personnel" button is clicked
+$(document).on("click", ".viewDepartmentPersonnel", (e) => {
+	getPersonnelAdvancedFind(
+		"personnel",
+		"departmentID",
+		parseInt(e.currentTarget.getAttribute("value"))
+	);
+});
+
+//Get departments in each location when department "View Departments" button is clicked
+$(document).on("click", ".viewLocationDepartments", (e) => {
+	getPersonnelAdvancedFind(
+		"department",
+		"locationID",
+		parseInt(e.currentTarget.getAttribute("value"))
+	);
+});
+
+//populates searchby field in advanced find
+$("#searchPDL").change((e) => {
+	$("#searchBy").empty();
+	populateSearchCriteria($("#searchPDL").val());
+	e.preventDefault();
+});
+
+//ajax call event listener when advanced find form is submitted
+$("#advancedFind").submit((e) => {
+	getPersonnelAdvancedFind(
+		$("#searchPDL").val(),
+		$("#searchBy").val(),
+		$("#searchInput").val()
+	);
+	e.preventDefault();
+});
+
 /////////////////////////// UPDATE EVENTS ////////////////////////////////////////
 
 /*$(document).on('click', ".editPersonnelButton",(e) => {
@@ -504,101 +612,7 @@ $(document).on("click", ".deleteLocation", (e) => {
 	});
 });
 
-/////////////////////////// CREATE PERSONNEL EVENT ////////////////////////////////////////
 
-//Populates departments dropdown when create personnel modal button is clicked
-/*$(document).on("click", "#createPersonnelModalButton", (e) => {
-	getDepartmentsPopulateDropdown();
-});*/
-
-//getDepartmentsPopulateDropdown();
-
-//ajax call event listener when create department form is submitted
-$("#createPersonnel").submit((e) => {
-	var firstName = $("#createPersonnelFirstName").val();
-	var lastName = $("#createPersonnelLastName").val();
-	var jobTitle = $("#createPersonnelJobTitle").val();
-	var email = $("#createPersonnelEmail").val();
-	var departmentID = parseInt($("#createPersonnelOptions").val());
-	insertPersonnel(firstName, lastName, jobTitle, email, departmentID);
-	e.preventDefault();
-});
-
-///////////////////////////CREATE DEPARTMENT EVENT////////////////////////////////////////
-
-//Populates locations dropdown when create department modal button is clicked
-$(document).on("click", "#createDepartmentModalButton", (e) => {
-	getLocationsPopulateDropdown();
-});
-
-//ajax call event listener when create department form is submitted
-$("#createDepartment").submit((e) => {
-	insertDepartment(
-		$("#createDepartmentName").val(),
-		parseInt($("#createDepartmentOptions").val())
-	);
-	e.preventDefault();
-});
-
-///////////////////////////CREATE LOCATION EVENT////////////////////////////////////////
-
-$("#createLocationModalButton").click(() => {
-	$("#createLocationName").val("")
-})
-
-//ajax call event listener when create Location form is submitted
-$("#createLocation").submit((e) => {
-	insertLocation($("#createLocationName").val());
-	e.preventDefault();
-});
-
-///////////////////////// READ EVENTS /////////////////////////////////////
-
-//Get personnel by id event listener
-$("#getPersonnelByID").submit((e) => {
-	getPersonnelByID($("#personnelIDValue").val());
-	e.preventDefault();
-});
-
-//Get All Departments event listeners
-$("#getPersonnel").click(getPersonnel);
-$("#getDepartments").click(getDepartments);
-$("#getLocations").click(getLocations);
-
-//Get personnel in each department when department "View Personnel" button is clicked
-$(document).on("click", ".viewDepartmentPersonnel", (e) => {
-	getPersonnelAdvancedFind(
-		"personnel",
-		"departmentID",
-		parseInt(e.currentTarget.getAttribute("value"))
-	);
-});
-
-//Get departments in each location when department "View Departments" button is clicked
-$(document).on("click", ".viewLocationDepartments", (e) => {
-	getPersonnelAdvancedFind(
-		"department",
-		"locationID",
-		parseInt(e.currentTarget.getAttribute("value"))
-	);
-});
-
-//populates searchby field in advanced find
-$("#searchPDL").change((e) => {
-	$("#searchBy").empty();
-	populateSearchCriteria($("#searchPDL").val());
-	e.preventDefault();
-});
-
-//ajax call event listener when advanced find form is submitted
-$("#advancedFind").submit((e) => {
-	getPersonnelAdvancedFind(
-		$("#searchPDL").val(),
-		$("#searchBy").val(),
-		$("#searchInput").val()
-	);
-	e.preventDefault();
-});
 
 ///////////////////////////////////// GENERAL ///////////////////////////////////////////////
 

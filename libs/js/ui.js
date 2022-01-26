@@ -63,7 +63,7 @@ export const displayDepartments = (data) => {
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">${department.name}</h5>
-                <p class="card-text">Location ID: ${department.locationID}</p>
+                <p class="card-text">Location: ${department.location}</p>
                 <p class="card-text">Personnel: ${department.personnel}</p>
                 <a value="${department.id}" class="btn btn-secondary deleteDepartment customButton"><i class="fas fa-trash-alt"></i></a>
                 <a value="${department.id}" class="btn btn-secondary viewDepartmentPersonnel customButton"><i class="fas fa-users"></i></a>
@@ -89,7 +89,7 @@ export const displayLocations = (data) => {
                 <div class="card-body">
                 <h5 class="card-title">${location.name}</h5>
                 <p class="card-text">Departments: ${location.department}</p>
-                <a value="${location.id}" class="btn btn-secondary deleteLocation customButton" data-bs-dismiss="modal" ><i class="fas fa-trash-alt"></i></a>
+                <a value="${location.id}" class="btn btn-secondary deleteLocation customButton"><i class="fas fa-trash-alt"></i></a>
                 <a value="${location.id}" class="btn btn-secondary viewLocationDepartments customButton"><i class="fas fa-sitemap"></i></a>
                 <a value="${location.id}" class="btn btn-secondary editLocationButton customButton" data-bs-dismiss="modal" data-bs-target="#editLocationModal"><i class="fas fa-edit"></i></a>
                 </div>

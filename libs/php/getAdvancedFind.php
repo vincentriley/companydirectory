@@ -48,7 +48,9 @@
 	
 	if ($_REQUEST['searchFor'] == "department") {
 		//$query = $conn->prepare('SELECT * from department WHERE ' . $_REQUEST['searchBy'] . ' = ?');
-		$query = $conn->prepare('SELECT department.id, department.name, department.locationID, COUNT(personnel.id) as personnel FROM department LEFT JOIN personnel ON personnel.departmentID = department.id WHERE department.' . $_REQUEST['searchBy'] . ' = ? GROUP BY department.id;');
+		//$query = $conn->prepare('SELECT department.id, department.name, department.locationID, COUNT(personnel.id) as personnel FROM department LEFT JOIN personnel ON personnel.departmentID = department.id WHERE department.' . $_REQUEST['searchBy'] . ' = ? GROUP BY department.id;');
+
+		$query = $conn->prepare('SELECT department.id, department.name, department.locationID, COUNT(personnel.id) as personnel, location.name as location FROM department LEFT JOIN personnel ON personnel.departmentID = department.id LEFT JOIN location on department.locationID = location.id WHERE department.' . $_REQUEST['searchBy'] . ' = ?;');
 
 		$query->bind_param("s", $_REQUEST['term']);
 
