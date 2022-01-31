@@ -1,11 +1,15 @@
 #backToTopButton {
-    display: none;
-    bottom: 20px;
-    position: fixed;
-    left: 50%;
-    z-index: 1031;
+	display: none;
+	bottom: 20px;
+	position: fixed;
+	left: 50%;
+	z-index: 1031;
 }
 
 .customButton {
-    width: 78px;
+	width: 78px;
+}
+
+.resultsContainer {
+	margin-bottom: 80px;
 }

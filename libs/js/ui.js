@@ -1,7 +1,7 @@
 export const displayPersonnel = (data) => {
 	$("#results").empty();
 	$("#results").append(
-		'<div class="d-flex justify-content-center"><h1>Personnel</h1></div>'
+		'<div class="d-flex justify-content-center personnelHeader"><h1>Personnel</h1></div>'
 	);
 	if (data.length === 0) {
 		$("#results").append("<h3>No Results Found</h3>");
@@ -102,7 +102,7 @@ export const displayLocations = (data) => {
 export const populateSearchCriteria = (value) => {
 	if (value === "personnel") {
 		$("#searchBy").append(`
-        <option value=id>ID</option>
+        
         <option value=firstName>First Name</option>
         <option value=lastName>Last Name</option>
         <option value=jobTitle>Job Title</option>
@@ -111,12 +111,12 @@ export const populateSearchCriteria = (value) => {
         `);
 	} else if (value === "department") {
 		$("#searchBy").append(`
-        <option value=id>ID</option>
+        
         <option value=name>Name</option>
         `);
 	} else if (value === "location") {
 		$("#searchBy").append(`
-        <option value=id>ID</option>
+        
         <option value=name>Name</option>
         `);
 	}
@@ -184,7 +184,7 @@ export const deletionProhibited = (name, type) => {
 	}
 	if (type === "location") {
 		$(".deletionProhibited").append(
-			`Cannot delete ${name} as this location has departments associated with it. Please remove departments before deleting department.`
+			`Cannot delete ${name} as this location has departments associated with it. Please remove departments before deleting location.`
 		);
 	}
 	$("#deletionUnsuccessfulModal").modal("show");
