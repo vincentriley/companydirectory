@@ -471,7 +471,9 @@ $("#getPersonnelByID").submit((e) => {
 });
 
 //Get All Departments event listeners
-$("#getPersonnel").click(getPersonnel);
+$("#getPersonnel").click(() => {
+	getPersonnel()
+});
 $("#getDepartments").click(getDepartments);
 $("#getLocations").click(getLocations);
 
